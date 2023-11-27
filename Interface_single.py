@@ -78,15 +78,19 @@ def start():
     with open(f'/home/{UsrName}/Desktop/IMAGE/workspace/RecordTestOption.txt','w')as f:
         if Retry.get()!='--':
             f.write('retry/')
+        if NotExecutRetry.get()!='--':
+            f.write('notexecutreset')
         if Reboot_Retry.get()!='--':
             f.write('reboot/')
         if factroy_Reset.get()!='--':
             f.write('factoryreset')
+        
 
     with open('runfre.txt','w')as f:       
         f.write(str(ch11_var.get())+'\n')
         f.write(str(ch22_var.get())+'\n')
-        f.write(str(ch33_var.get()))
+        f.write(str(ch33_var.get())+'\n')
+        f.write(str(ch44_var.get())+'\n')
         f.close
 
     with open('record_disconnect.txt','r+') as a:
@@ -236,49 +240,50 @@ checkbutton4.config(width=12)
 
 
 e_path1 = tk.Entry(root, textvariable=var1, width=42)
-e_path1.place(x=50, y=130)
+e_path1.place(x=50, y=180)
 
 b_select1 = tk.Button(root, text='Select CtsTool', command=select_CtsTool, width=10)
-b_select1.place(x=320, y=130)
+b_select1.place(x=320, y=180)
 
 f_path1 = tk.Entry(root, textvariable=var11, width=42)
-f_path1.place(x=50, y=165)
+f_path1.place(x=50, y=210)
 
 c_select1 = tk.Button(root, text='Select CtsImage', command=select_CtsImage, width=10)
-c_select1.place(x=320, y=165)
-
-
-
+c_select1.place(x=320, y=210)
 
 e_path2 = tk.Entry(root, textvariable=var2, width=42)
-e_path2.place(x=50, y=200)
+e_path2.place(x=50, y=240)
 
 b_select2 = tk.Button(root, text='Select GtsTool', command=select_GtsTool, width=10)
-b_select2.place(x=320, y=200)
+b_select2.place(x=320, y=240)
 
 f_path2 = tk.Entry(root, textvariable=var22, width=42)
-f_path2.place(x=50, y=235)
+f_path2.place(x=50, y=270)
 
 c_select2 = tk.Button(root, text='Select GtsImage', command=select_GtsImage, width=10)
-c_select2.place(x=320, y=235)
+c_select2.place(x=320, y=270)
 
 e_path3 = tk.Entry(root, textvariable=var3, width=42)
-e_path3.place(x=50, y=270)
+e_path3.place(x=50, y=300)
 
 b_select3 = tk.Button(root, text='Select StsTool', command=select_StsTool, width=10)
-b_select3.place(x=320, y=270)
+b_select3.place(x=320, y=300)
 
 f_path3 = tk.Entry(root, textvariable=var33, width=42)
-f_path3.place(x=50, y=305)
+f_path3.place(x=50, y=330)
 
 c_select3 = tk.Button(root, text='Select StsImage', command=select_StsImage, width=10)
-c_select3.place(x=320, y=305)
+c_select3.place(x=320, y=330)
 
 
 
 frame3 = tk.Frame(root,pady=10)
 frame3.pack()
 frame3.place(x=20, y=80)
+
+frame4 = tk.Frame(root,pady=10)
+frame4.pack()
+frame4.place(x=20, y=120)
 
 Retry = tk.StringVar()
 checkbutton_Retry = tk.Checkbutton(frame3, text="",variable=Retry, onvalue='Retry', offvalue='--',pady=0)
@@ -295,6 +300,21 @@ ch11_var.set(values[0])
 ch11 = tk.OptionMenu(frame3, ch11_var, *values)
 label1.pack(side=tk.LEFT)
 ch11.pack(side=tk.LEFT)
+
+
+NotExecutRetry = tk.StringVar()
+checkbutton_NotExecurRetry = tk.Checkbutton(frame4, text="",variable=NotExecutRetry, onvalue='NotExecutRetry', offvalue='--',pady=0)
+checkbutton_NotExecurRetry.pack(side=tk.LEFT)
+checkbutton_NotExecurRetry.deselect()
+
+
+label11 = tk.Label(frame4, text="NotExecutRetry")
+label11.pack()
+ch44_var = tk.StringVar()
+ch44_var.set(values[0])
+ch44 = tk.OptionMenu(frame4, ch11_var, *values)
+label11.pack(side=tk.LEFT)
+ch44.pack(side=tk.LEFT)
 
 Reboot_Retry = tk.StringVar()
 checkbutton_Reboot_Retry = tk.Checkbutton(frame3, text="",variable=Reboot_Retry, onvalue='RebootRetry', offvalue='--',pady=1)
