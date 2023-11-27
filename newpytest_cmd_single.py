@@ -72,6 +72,12 @@ def retry_command():
     file.close()
     return r1
 
+def notexecutretry_command():
+    with open(f'/home/{UsrName}/Desktop/IMAGE/workspace/Pipeline_Testing_Cts/notexecutretry1.sh') as file:
+        r2 = file.read().replace('\n', '')
+    file.close()
+    return r2
+
 # Auto GUI to enter tradefed mode and run cts
 def first(cts):
     hotkey('ctrl','alt','t')
@@ -97,10 +103,10 @@ def firstII(cts):
     android_home = dirpath
     cts_command = android_home + "/android-cts/tools/cts-tradefed"
     shard_count = str(len(devices))
-    command_list = [cts_command, "run", "cts", "--shard-count", shard_count]
+    # command_list = [cts_command, "run", "cts", "--shard-count", shard_count]
     # command_list = [cts_command, "run", "cts --abi arm64-v8a -m CtsCameraTestCases", "--shard-count", shard_count]
     # command_list = [cts_command, "run", "cts --abi arm64-v8a -m CtsThemeHostTestCases", "--shard-count", shard_count]
-    # command_list = [cts_command, "run", "cts --abi arm64-v8a -m CtsAppUsageHostTestCases", "--shard-count", shard_count]
+    command_list = [cts_command, "run", "cts --abi arm64-v8a -m CtsAppUsageHostTestCases", "--shard-count", shard_count]
     for serial_number in devices:
         command_list += ["-s", serial_number]
     # subprocess.run(f"gnome-terminal -- bash -c '{command_list}'", shell=True)
@@ -158,6 +164,23 @@ def retry_timeII(r1):
     ppid=int(pp_id[0])
     print(pp_id[0])
     return ppid
+
+def notexecutretry_timeII(r2):
+    print("Notexecutretry_timeII")
+    android_home = dirpath
+    gts_command = android_home + "/android-cts/tools/cts-tradefed"
+    r2=gts_command +" "+r2
+    print("r="+r2)
+    # check =input('Please comfirm all devices have entered fastboot mode [y/n] ...')
+    pp=subprocess.Popen(f"gnome-terminal -- bash -c '{r2}'", shell=True)
+    pp_pid=pp.pid
+    time.sleep(5)
+    pp_pid = subprocess.check_output(f"pgrep -l -u '{UsrName}'| grep cts-tradefed | tail -1", shell=True) # get the process id
+    pp_id=pp_pid.decode("utf-8").split()
+    ppid=int(pp_id[0])
+    print(pp_id[0])
+    return ppid
+
 
 
 #reboot command and retry
@@ -320,6 +343,8 @@ file.close()
 retry_num=runfre[0]
 reboot_num=runfre[1]
 reset_num=runfre[2]
+notexecuteset_num=runfre[3]
+
 
 #set factory reset command
 devices = []
@@ -409,6 +434,21 @@ while (retry==1):
             print("retry process")
             process_name="retry process"
             pid=retry_timeII(r1)
+            exit()
+            time.sleep(30)
+            print("test")
+            retry = test()
+            r1 = retry_command()
+            r2 = notexecutretry_command()
+            os.kill(pid, signal.SIGTERM)
+            print(" count="+str(count)+" retry_num="+str(retry_num)+" reboot_num="+str(reboot_num))
+        elif (count < notexecuteset_num+1): # check retry run how many times
+            # retry_time(r1)
+            print("get_latestfolder")
+            latestfolder=get_latestfolder()
+            print("Not EXecuted retry process")
+            process_name="Not EXecuted retry process"
+            pid=notexecutretry_timeII(r2)
             exit()
             time.sleep(30)
             print("test")
