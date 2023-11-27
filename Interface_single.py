@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import os
 import tkinter as tk
+from tkinter import messagebox
 from tkinter import ttk
 from tkinter.filedialog import askdirectory
 from tkinter import filedialog as fd
@@ -68,6 +69,7 @@ def select_StsImage():
 
 
 def start():
+    
     with open(f'/home/{UsrName}/Desktop/IMAGE/workspace/RecordOption.txt','w')as f:
         if cts.get()!='--':
             f.write('cts/')
@@ -92,7 +94,18 @@ def start():
         f.write(str(ch33_var.get())+'\n')
         f.write(str(ch44_var.get())+'\n')
         f.close
-
+        
+    runfre = []
+    with open(f'/home/{UsrName}/Desktop/IMAGE/workspace/runfre.txt') as file:
+        for line in file.readlines():
+            runfre.append(int(line))
+    file.close()
+    retry_num=runfre[0]
+    reboot_num=runfre[1]
+    reset_num=runfre[2]
+    notexecuteset_num=runfre[3]
+    tk.messagebox.askokcancel(title=None, message="請確認retry, reboot factoryRest and Not Executed 次數是否正確 retry_num="+retry_num+" reboot_num="+reboot_num+" reset_num="+reset_num+" notexecuteset_num="+notexecuteset_num)
+    
     with open('record_disconnect.txt','r+') as a:
         a.truncate(0)
         # root.destroy()
@@ -200,7 +213,7 @@ frame = tk.Frame(root)
 frame.pack()
 
 # 創建標籤並添加到框架中
-label = tk.Label(frame, text="GMS Auto Test", font = ('Bahnschrift',20,'bold'),pady=10)
+label = tk.Label(frame, text="GMS Auto Test w/ Single Test", font = ('Bahnschrift',20,'bold'),pady=10)
 label.pack(side=tk.TOP)
 
 # 創建一個框架
@@ -312,7 +325,7 @@ label11 = tk.Label(frame4, text="NotExecutRetry")
 label11.pack()
 ch44_var = tk.StringVar()
 ch44_var.set(values[0])
-ch44 = tk.OptionMenu(frame4, ch11_var, *values)
+ch44 = tk.OptionMenu(frame4, ch44_var, *values)
 label11.pack(side=tk.LEFT)
 ch44.pack(side=tk.LEFT)
 
