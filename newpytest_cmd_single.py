@@ -474,9 +474,9 @@ while (retry==1):
             retry = test()
             r1 = retry_command()
             os.kill(pid, signal.SIGTERM)
-            print(" count="+str(count)+" retry_num="+str(retry_num)+" reboot_num="+str(reboot_num))
+            print(" count="+str(count)+" retry_num="+str(retry_num)+" reboot_num="+str(reboot_num)+"notexecuteset_num="+ str(notexecuteset_num))
 
-    elif (count<retry_num+reboot_num+rnotexecuteset_num+eset_num+1): #factory reset and retry
+    elif (count<retry_num+reboot_num+notexecuteset_num+reset_num+1): #factory reset and retry
         # action=input("factory reset continue or not [y/n]...")
         # action=action.lower()
         # if action=='y':
